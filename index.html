@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialHub- All-in-One Social Experience</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff4b8b;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --success: #00c9a7;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e3c72 100%);
+            color: var(--light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            font-size: 28px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            margin-top: 80px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            background: rgba(30, 30, 50, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            color: white;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .story-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        .story {
+            flex: 0 0 auto;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            padding: 3px;
+            cursor: pointer;
+        }
+
+        .story-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .reel-container {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reel-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reel-actions {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+
+        .message-in {
+            background: rgba(106, 17, 203, 0.3);
+            border: 1px solid var(--primary);
+        }
+
+        .message-out {
+            background: rgba(37, 117, 252, 0.3);
+            border: 1px solid var(--secondary);
+            margin-left: auto;
+        }
+
+        .filter-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 0;
+        }
+
+        .filter {
+            flex: 0 0 auto;
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            margin-right: 15px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .filter img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .filter-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(106, 17, 203, 0.4);
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.5);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 22px;
+            }
+            
+            .reel-container {
+                height: 250px;
+            }
+            
+            .story {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 20px;
+            }
+            
+            .reel-container {
+                height: 200px;
+            }
+            
+            .story {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand logo" href="rathore.jpg">UniSocial</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-fire"></i> Reels</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-users"></i> Friends</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-comments"></i> Messages</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2 bg-dark text-light" type="search" placeholder="Search...">
+                    <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <ul class="navbar-nav ms-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <img src="boy3.jpg" class="avatar" alt="Profile">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        <div class="row">
+            <!-- Left Sidebar -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="card p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="boy.jpg" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">John Doe</h6>
+                            <small class="text-muted">@johndoe</small>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-user-friends me-2"></i> Friends</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-users me-2"></i> Groups</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-store me-2"></i> Marketplace</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-video me-2"></i> Watch</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-history me-2"></i> Memories</a></li>
+                    </ul>
+                    <hr>
+                    <h6 class="text-muted">YOUR SHORTCUTS</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-gamepad me-2"></i> Gaming</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-calendar me-2"></i> Events</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-light"><i class="fas fa-flag me-2"></i> Pages</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Feed -->
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                <!-- Create Post -->
+                <div class="card p-3">
+                    <div class="d-flex">
+                        <img src="boy.jpg" class="avatar me-3" alt="User">
+                        <input type="text" class="form-control bg-dark text-light" placeholder="What's on your mind?">
+                    </div>
+                    <hr class="my-3">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-sm btn-outline-light"><i class="fas fa-video text-danger me-1"></i> Live Video</button>
+                        <button class="btn btn-sm btn-outline-light"><i class="fas fa-photo-video text-success me-1"></i> Photo/Video</button>
+                        <button class="btn btn-sm btn-outline-light"><i class="fas fa-laugh text-warning me-1"></i> Feeling/Activity</button>
+                    </div>
+                </div>
+
+                <!-- Stories -->
+                <div class="card p-3">
+                    <div class="story-container">
+                        <div class="story">
+                            <div class="story-inner">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="story" style="background: linear-gradient(45deg, #ff4b8b, #ff9a9e);">
+                            <div class="story-inner">
+                                <img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 50%;">
+                            </div>
+                        </div>
+                        <div class="story" style="background: linear-gradient(45deg, #00c9ff, #92fe9d);">
+                            <div class="story-inner">
+                                <img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 50%;">
+                            </div>
+                        </div>
+                        <div class="story" style="background: linear-gradient(45deg, #f6d365, #fda085);">
+                            <div class="story-inner">
+                                <img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 50%;">
+                            </div>
+                        </div>
+                        <div class="story" style="background: linear-gradient(45deg, #a6c0fe, #f68084);">
+                            <div class="story-inner">
+                                <img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 50%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reels -->
+                <div class="card p-3">
+                    <h5 class="mb-3"><i class="fas fa-fire text-danger me-2"></i> Reels</h5>
+                    <div class="reel-container">
+                        <video class="reel-video" poster="https://via.placeholder.com/500x300" controls>
+                            <source src="#" type="video/mp4">
+                        </video>
+                        <div class="reel-actions">
+                            <button class="btn btn-sm btn-light mb-2"><i class="fas fa-heart text-danger"></i> 2.1K</button>
+                            <button class="btn btn-sm btn-light mb-2"><i class="fas fa-comment"></i> 342</button>
+                            <button class="btn btn-sm btn-light mb-2"><i class="fas fa-share"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Posts -->
+                <div class="card">
+                    <div class="post-header">
+                        <img src="https://via.placeholder.com/40" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">Sarah Johnson</h6>
+                            <small class="text-muted">3 hrs ago</small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Just visited the most amazing place! The views were breathtaking and the experience was unforgettable. 😍 #Travel #Adventure</p>
+                        <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Post image">
+                    </div>
+                    <div class="post-actions">
+                        <a href="#" class="action-btn"><i class="fas fa-thumbs-up me-1"></i> Like</a>
+                        <a href="#" class="action-btn"><i class="fas fa-comment me-1"></i> Comment</a>
+                        <a href="#" class="action-btn"><i class="fas fa-share me-1"></i> Share</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="post-header">
+                        <img src="https://via.placeholder.com/40" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">Mike Thompson</h6>
+                            <small class="text-muted">5 hrs ago</small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Just released my new project! Check it out and let me know what you think. #coding #webdevelopment #newproject</p>
+                        <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Post image">
+                    </div>
+                    <div class="post-actions">
+                        <a href="#" class="action-btn"><i class="fas fa-thumbs-up me-1"></i> Like</a>
+                        <a href="#" class="action-btn"><i class="fas fa-comment me-1"></i> Comment</a>
+                        <a href="#" class="action-btn"><i class="fas fa-share me-1"></i> Share</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-lg-3 col-md-4 d-none d-md-block">
+                <!-- Snap Filters -->
+                <div class="card p-3 mb-3">
+                    <h5 class="mb-3"><i class="fas fa-magic me-2"></i> Snap Filters</h5>
+                    <div class="filter-container">
+                        <div class="filter">
+                            <img src="filter1.webp" alt="Filter">
+                            <div class="filter-name">Dog Face</div>
+                        </div>
+                        <div class="filter">
+                            <img src="filter2.avif" alt="Filter">
+                            <div class="filter-name">Flower Crown</div>
+                        </div>
+                        <div class="filter">
+                            <img src="filter3.jpeg" alt="Filter">
+                            <div class="filter-name">Vintage</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friends -->
+                <div class="card p-3 mb-3">
+                    <h5 class="mb-3"><i class="fas fa-users me-2"></i> Friends</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="girl.jpg" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">Emma Watson</h6>
+                            <small class="text-muted">Active 20m ago</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="girl1.jpg" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">Chris Evans</h6>
+                            <small class="text-muted">Active 1h ago</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="boy2.jpg" class="avatar me-3" alt="User">
+                        <div>
+                            <h6 class="mb-0">Scarlett Johansson</h6>
+                            <small class="text-muted">Active 2h ago</small>
+                        </div>
+                    </div>
+                    <a href="#" class="text-decoration-none text-center">See All</a>
+                </div>
+
+                <!-- Chat -->
+                <div class="card p-3">
+                    <h5 class="mb-3"><i class="fas fa-comments me-2"></i> Messages</h5>
+                    <div class="chat-container">
+                        <div class="message message-in">
+                            Hey, how are you doing?
+                        </div>
+                        <div class="message message-out">
+                            I'm good! Just working on a new project. How about you?
+                        </div>
+                        <div class="message message-in">
+                            That's great! I'm just relaxing this weekend. Want to meet up later?
+                        </div>
+                    </div>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control bg-dark text-light" placeholder="Type a message...">
+                        <button class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-btn">
+        <i class="fas fa-camera"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Like button functionality
+            const likeButtons = document.querySelectorAll('.action-btn');
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (this.querySelector('.fa-thumbs-up')) {
+                        this.classList.toggle('text-primary');
+                    }
+                });
+            });
+
+            // Story click effect
+            const stories = document.querySelectorAll('.story');
+            stories.forEach(story => {
+                story.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+
+            // Filter selection
+            const filters = document.querySelectorAll('.filter');
+            filters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    filters.forEach(f => f.style.border = 'none');
+                    this.style.border = '2px solid var(--primary)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
